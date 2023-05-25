@@ -3327,3 +3327,19 @@ input, select, textarea {
 			}
 
 		}
+
+
+p.mess-main{
+	color: #E8AA42;
+	
+	animation: hide 2.5s linear 2.5s 1 forwards;
+	
+	
+}		
+
+@keyframes hide {
+	to {
+		opacity: 0;
+		display: none;
+	}
+}

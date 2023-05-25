@@ -59,13 +59,19 @@
 								<h1>Welcome to CouchCart, your one and only stop<br />
 								for entertainment, designed by <a href="http://html5up.net">Ayush Sharma</a>.</h1>
 								<p>Movies to make your day better, just name it, we got it all.</p>
+								{% if messages %}
+								{% for message in messages%}
+									<p class="mess-main"><strong> {{message}}</strong></p> 
+								{%endfor%}
+								{%endif %} 
+								
 							</header>
 							<section class="tiles">
 								<article class="style1">
 									<span class="image">
 										<img src="{%static 'images/pic01.gif' %}" alt="" />
 									</span>
-									<a href="generic.html">
+									<a href="{% url 'genre' genre='Adventure'%}">
 										<h2>Adventure</h2>
 										<div class="content">
 											<p>Maybe a tomb that needs exploring?</p>
@@ -202,7 +208,8 @@
 						<div class="inner">
 							<section>
 								<h2>Get in touch</h2>
-								<form method="post" action="#">
+								<form method="post">
+									{% csrf_token %}
 									<div class="fields">
 										<div class="field half">
 											<input type="text" name="name" id="name" placeholder="Name" />
@@ -246,6 +253,7 @@
 			<script src="{% static 'assets/js/breakpoints.min.js' %}"></script>
 			<script src="{% static 'assets/js/util.js' %}"></script>
 			<script src="{% static 'assets/js/main.js' %}"></script>
+			
 			
 
 	</body>
