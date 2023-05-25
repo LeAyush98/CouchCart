@@ -48,7 +48,7 @@
 							<li><a href="generic.html">View Cart</a></li>
 							<li><a href="generic.html">Login</a></li>
 							<li><a href="generic.html">Register</a></li>	
-							<li><a href="elements.html">About</a></li>
+							<li><a href="{% url 'about' %}">About</a></li>
 						</ul>
 					</nav>
 
@@ -57,7 +57,7 @@
 						<div class="inner">
 							<header>
 								<h1>Welcome to CouchCart, your one and only stop<br />
-								for entertainment, designed by <a href="http://html5up.net">Ayush Sharma</a>.</h1>
+								for entertainment, designed by <a href="{% url 'about' %}">Ayush Sharma</a>.</h1>
 								<p>Movies to make your day better, just name it, we got it all.</p>
 								{% if messages %}
 								{% for message in messages%}
@@ -229,14 +229,10 @@
 							<section>
 								<h2>Follow</h2>
 								<ul class="icons">
-									<li><a href="#" class="icon brands style2 fa-twitter"><span class="label">Twitter</span></a></li>
-									<li><a href="#" class="icon brands style2 fa-facebook-f"><span class="label">Facebook</span></a></li>
-									<li><a href="#" class="icon brands style2 fa-instagram"><span class="label">Instagram</span></a></li>
-									<li><a href="#" class="icon brands style2 fa-dribbble"><span class="label">Dribbble</span></a></li>
-									<li><a href="#" class="icon brands style2 fa-github"><span class="label">GitHub</span></a></li>
-									<li><a href="#" class="icon brands style2 fa-500px"><span class="label">500px</span></a></li>
-									<li><a href="#" class="icon solid style2 fa-phone"><span class="label">Phone</span></a></li>
-									<li><a href="#" class="icon solid style2 fa-envelope"><span class="label">Email</span></a></li>
+									<li><a href="https://twitter.com/AyuShar21365283" class="icon brands style2 fa-twitter"><span class="label">Twitter</span></a></li>
+									<li><a href="https://www.linkedin.com/in/ayush-sharma-913a3025b/" class="icon brands style2 fa-linkedin"><span class="label">Linkedin</span></a></li>
+									<li><a href="https://www.instagram.com/ayush_shar7/" class="icon brands style2 fa-instagram"><span class="label">Instagram</span></a></li>
+									<li><a href="https://github.com/LeAyush98" class="icon brands style2 fa-github"><span class="label">Github</span></a></li>     
 								</ul>
 							</section>
 							<ul class="copyright">

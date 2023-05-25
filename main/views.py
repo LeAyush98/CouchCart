@@ -34,3 +34,6 @@ def genre(request, genre):
         mail(request.POST["name"], request.POST["email"], request.POST["message"])
 
     return render(request, "main/generic.html", {"genre" : genre})
+
+def about(request):
+    return render(request, "main/about.html", {})
