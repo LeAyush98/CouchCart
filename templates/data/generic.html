@@ -11,6 +11,7 @@
 		<meta charset="utf-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
 		<link rel="stylesheet" href="{% static 'assets/css/main.css' %}" />
+        <link rel="stylesheet" href="{% static 'assets/css/genre.css' %}" />
 		<link rel="stylesheet" href="{% static 'assets/css/fontawesome-all.min.css' %}" />
 		<noscript><link rel="stylesheet" href="{% static 'assets/css/noscript.css'%}" /></noscript>
 		<link rel="shortcut icon" href="{% static 'images/favicon.ico'%}" type="image/x-icon">
@@ -25,7 +26,7 @@
 						<div class="inner">
 
 							<!-- Logo -->
-								<a href="index.html" class="logo">
+								<a href="{% url 'home'%}" class="logo">
 									<span class="symbol"><img src="{% static 'images/logo.svg' %}" alt="" /></span><span class="title">CouchCart</span>
 								</a>
 
@@ -43,7 +44,7 @@
 				<nav id="menu">
 					<h2>Menu</h2>
 					<ul>
-						<li><a href="index.html">Home</a></li>
+						<li><a href="{% url 'home'%}">Home</a></li>
 						<li><a href="generic.html">Search</a></li>
 						<li><a href="generic.html">View Cart</a></li>
 						<li><a href="generic.html">Login</a></li>
@@ -55,9 +56,8 @@
 				<!-- Main -->
 					<div id="main">
 						<div class="inner">
-							<h1>Hi, I am Ayush!</h1>
-                            <h3>This is how I live my life.</h3>
-                            <div id = "scriptbois">
+							<h1>{{genre}}</h1>
+							<div id = "scriptbois">
 								{% if messages %}
 								{% for message in messages%}
 									<strong style="color:#E8AA42"> {{message}}</strong>
@@ -68,11 +68,34 @@
 								{%endif %} 
 							
 								</div>
-							<span class="image main"><img src="{% static 'images/pic13.png' %}" alt="" /></span>
-                            <p>Greetings, fellow visitor to my CouchCart website! I am Ayush and I am a python/back-end developer.</p>
-                            <p>When I am not working on my projects, You can find me playing my guitar, singing songs and travelling around exploring new opportunities.</p>
-                            <p>Oh yes, I also run a personal blog!</p>
-                            <p>Hope you enjoy your time on my <a href="https://ayush-blog.onrender.com/">blog</a> and feel free to contact me to stay in touch! And yes, you can contribute stuff there yourself if you feel like :)</p>
+                                {% if movies %}
+                                    {% for movie in movies %}
+                                    <div class="card" >
+                                        <div class="front" style="background-image: url({{movie.image}})">
+                                            <p class="large">{{movie.popularity}}</p>
+                                        </div>
+                                        <div class="back">
+                                          <div>
+                                        <div class="title"><strong>{{movie.name}} <span class="release_date">({{movie.year}})</span></strong></div>
+                                            <div class="rating">
+                                                <label>{{movie.rating}}</label>
+                                              <i class="fas fa-star star"></i>
+                                            </div>
+                                          <div class="increase">
+                                            <p class="overview">
+                                            <strong>{{movie.synopsis}}</strong>
+                                            </p>
+                                          </div>
+                                             <p>{{movie.price}} INR</p> 
+                                            <a href="#" class="button">Add to Cart</a>      
+                                          </div>
+                                        </div>
+                                      </div>	
+                                    {% endfor %}
+                                {% else %}
+                                no movie
+                                {% endif %}
+                              	
 						</div>
 					</div>
 

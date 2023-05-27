@@ -30,9 +30,6 @@ def home(request):
     contact(request)
     return render(request, "main/index.html", {})
 
-def genre(request, genre):
-    contact(request)
-    return render(request, "main/generic.html", {"genre" : genre})
 
 def about(request):
     contact(request)

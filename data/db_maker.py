@@ -1,8 +1,9 @@
-# Do NOT run this file
-
 import requests
 from dotenv import load_dotenv
 import os
+import math
+from data.models import Movie
+import pandas
 
 load_dotenv(".env")
 
@@ -25,45 +26,16 @@ class MovieAPI:
         data = response.json()["results"][0]
         return data
 
-# movie = MovieAPI("spiderman")
-# #print(movie.search())
-# print(f"rating is {movie.search()['vote_average']}/10")
-# print(f"Summary : {movie.search()['overview']}")
-# print(f"image URL : {movie.IMAGE_URL}{movie.search()['poster_path']}?api_key={movie.API_KEY}")
-# print(f"Year of release is {movie.search()['release_date'].split('-')[0]}")
-# Name, Genre and Price is provided by me.
+def add_data():
+    movie_object = pandas.read_csv("data/movie_list.csv")
+    for movie in movie_object.iterrows():
+        object = MovieAPI(movie[1]["name"])
+        Movie.objects.create(name = object.search()['title'],
+                            genre = movie[1]['genre'],
+                            rating = round(object.search()['vote_average'] , 2),
+                            popularity = math.floor(float(object.search()['popularity'])),
+                            year = object.search()['release_date'].split('-')[0],
+                            synopsis = object.search()['overview'],
+                            image = f"{object.IMAGE_URL}{object.search()['poster_path']}?api_key={object.API_KEY}",
+                            price = movie[1]['price'])
 
-# movie_object = open("data/movie_list.txt", "r")
-# movie_list = movie_object.readlines()
-# movies = []
-# for _ in movie_list:
-#     print(_.split("\n")[0])
-#     movies.append(_.split("\n")[0])
-
-# for movie in movies:
-#     object = MovieAPI(movie)
-#     print(f"movie name is {movie}")
-#     print(f"genre is ")
-#     print(f"rating is {object.search()['vote_average']}/10")
-#     print(f"Summary : {object.search()['overview']}")
-#     print(f"image URL : {object.IMAGE_URL}{object.search()['poster_path']}?api_key={object.API_KEY}")
-#     print(f"Year of release is {object.search()['release_date'].split('-')[0]}")
-#     print(f"Price is only INR")
-#     print("\n\n\n")
-
-# import pandas
-
-# # movie_object = pandas.read_csv("data/movie_list.csv")
-# # for movie in movie_object.iterrows():
-# #     object = MovieAPI(movie[1]["name"])
-# #     print(f"movie name is {object.search()['title']}")
-# #     print(f"genre is {movie[1]['genre']}")
-# #     print(f"rating is {object.search()['vote_average']}/10")
-# #     print(f"Summary : {object.search()['overview']}")
-# #     print(f"image URL : {object.IMAGE_URL}{object.search()['poster_path']}?api_key={object.API_KEY}")
-# #     print(f"Year of release is {object.search()['release_date'].split('-')[0]}")
-# #     print(f"Price is only {movie[1]['price']} INR")
-# #     print("\n\n")
-
-movie = MovieAPI("LA 92")
-print(movie.search())     
