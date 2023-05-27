@@ -20,20 +20,20 @@ def mail(name:str, email:str, message:str) -> None:
     )
     connection.close()
 
-# Create your views here.
-def home(request):
-    #messages.success(request, "Testing 123")
+def contact(request):
     if request.method == "POST":
         messages.success(request, "Message sent")
         mail(request.POST["name"], request.POST["email"], request.POST["message"])
+
+# Create your views here.
+def home(request):
+    contact(request)
     return render(request, "main/index.html", {})
 
 def genre(request, genre):
-    if request.method == "POST":
-        messages.success(request, "Message sent")
-        mail(request.POST["name"], request.POST["email"], request.POST["message"])
-
+    contact(request)
     return render(request, "main/generic.html", {"genre" : genre})
 
 def about(request):
+    contact(request)
     return render(request, "main/about.html", {})
