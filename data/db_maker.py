@@ -27,7 +27,7 @@ class MovieAPI:
         return data
 
 def add_data():
-    movie_object = pandas.read_csv("data/movie_list.csv")
+    movie_object = pandas.read_csv("data/movies.csv")
     for movie in movie_object.iterrows():
         object = MovieAPI(movie[1]["name"])
         Movie.objects.create(name = object.search()['title'],

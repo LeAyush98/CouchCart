@@ -1,10 +1,5 @@
 <!DOCTYPE HTML>
 {% load static%}
-<!--
-	Phantom by HTML5 UP
-	html5up.net | @ajlkn
-	Free for personal and commercial use under the CCA 3.0 license (html5up.net/license)
--->
 <html>
 	<head>
 		<title>CouchCart</title>
@@ -49,7 +44,7 @@
 						<li><a href="generic.html">View Cart</a></li>
 						<li><a href="generic.html">Login</a></li>
 						<li><a href="generic.html">Register</a></li>	
-						<li><a href="elements.html">About</a></li>
+						<li><a href="{% url 'about' %}">About</a></li>
 					</ul>
 				</nav>
 
@@ -78,8 +73,8 @@
                                           <div>
                                         <div class="title"><strong>{{movie.name}} <span class="release_date">({{movie.year}})</span></strong></div>
                                             <div class="rating">
-                                                <label>{{movie.rating}}</label>
-                                              <i class="fas fa-star star"></i>
+                                                <label>{{movie.rating}} <i class="fas fa-star star"></i></label>
+                                              <span></span>
                                             </div>
                                           <div class="increase">
                                             <p class="overview">
@@ -87,14 +82,26 @@
                                             </p>
                                           </div>
                                              <p>{{movie.price}} INR</p> 
-                                            <a href="#" class="button">Add to Cart</a>      
+                                            <a href="#" class="button-genre">Add to Cart</a>      
                                           </div>
                                         </div>
                                       </div>	
                                     {% endfor %}
+                                        {% if movies.has_previous %}
+                                        <a href="?page=1" class="button-genre">First</a>
+                                        <a href="?page={{movies.previous_page_number}}" class="button-genre">Previous</a>
+                                        {% endif %}
+                                    
+                                        {% if movies.has_next %}
+                                        <a href="?page={{movies.next_page_number}}" class="button-genre">Next</a>
+                                        <a href="?page={{movies.paginator.num_pages}}" class="button-genre">Last</a>
+                                        {% endif %}
+                                        <br>
+                                        <p class="pages">Page : {{movies.number }} of {{ movies.paginator.num_pages }}</p>
                                 {% else %}
                                 no movie
                                 {% endif %}
+                                    
                               	
 						</div>
 					</div>

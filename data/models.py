@@ -3,7 +3,7 @@ from django.contrib.auth.models import User
 
 # Create your models here.
 class Movie(models.Model):
-    name = models.CharField(max_length=30)
+    name = models.CharField(max_length=130)
     genre = models.CharField(max_length=30)
     rating = models.FloatField()
     popularity = models.IntegerField(default=5)

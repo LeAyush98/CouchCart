@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.contrib import messages
 import smtplib
 from dotenv import load_dotenv
@@ -24,6 +24,7 @@ def contact(request):
     if request.method == "POST":
         messages.success(request, "Message sent")
         mail(request.POST["name"], request.POST["email"], request.POST["message"])
+        return redirect("home")
 
 # Create your views here.
 def home(request):

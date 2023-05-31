@@ -23,7 +23,6 @@
 }
 .large {
      font-size: 3rem;
-	 backdrop-filter: blur(10px);
 }
  .content {
 	 display: flex;
@@ -173,23 +172,23 @@
  .card:nth-child(even):hover .back {
 	 transform: rotateY(0deg);
 }
- .button {
+ .button-genre {
 	 transform: translateZ(40px);
 	 cursor: pointer;
 	 -webkit-backface-visibility: hidden;
 	 backface-visibility: hidden;
 	 font-weight: bold;
-	 color: #fff;
+	 color: black;
 	 padding: 0.5em 1em;
 	 border-radius: 100px;
 	 font: inherit;
-	 background: linear-gradient(135deg, #1a9be6, #1a57e6);
+	 background-color: #E8AA42;
 	 border: none;
 	 position: relative;
 	 transform-style: preserve-3d;
 	 transition: 300ms ease;
 }
- .button:before {
+ .button-genre:before {
 	 transition: 300ms ease;
 	 position: absolute;
 	 display: block;
@@ -202,24 +201,11 @@
 	 border-radius: 100px;
 	 left: 10px;
 	 top: 8px;
-	 box-shadow: 0 0 10px 10px rgba(26, 87, 230, 0.25);
-	 background-color: rgba(26, 87, 230, 0.25);
 }
 
-.button.delete-button {
-	 background-color: rgba(230, 87, 230, 0.25);
-	 background: linear-gradient(135deg, #e61a46, #e61a1a);
-	 margin-bottom: 10px;
-
-}
-.button.delete-button:before {
-	 background-color: rgba(230, 87, 230, 0.25);
-	 box-shadow: 0 0 10px 10px rgba(230, 87, 230, 0.25);
-	 margin-bottom: 10px;
-
-}
- .button:hover {
+ .button-genre:hover {
 	 transform: translateZ(55px);
+     color: black !important;
 }
  .button:hover:before {
 	 transform: translateZ(-55px);
@@ -239,6 +225,7 @@
 }
 .rating {
     color: #E4BB23;
+    display: inline;
 }
 .review {
     font-style: italic;
@@ -307,4 +294,13 @@ a.fixed{
 	font-size: larger;
 	color: antiquewhite;
 	padding-left: 50%;
+}
+
+p.overview{
+    font-size: 0.8em !important;
+}
+
+p.pages{
+    padding-top: 2%;
+    padding-left: 0.8%;
 }
