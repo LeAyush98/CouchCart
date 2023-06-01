@@ -3088,10 +3088,12 @@ input, select, textarea {
 			}
 
 			#menu > .close:hover:before {
+				color: "#E8AA42" !important;
 				opacity: 1;
 			}
 
 			#menu > .close:hover:after {
+				color: "#E8AA42" !important;
 				opacity: 0;
 			}
 

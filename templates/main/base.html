@@ -41,8 +41,12 @@
 						<li><a href="{% url 'home'%}">Home</a></li>
 						<li><a href="generic.html">Search</a></li>
 						<li><a href="generic.html">View Cart</a></li>
-						<li><a href="generic.html">Login</a></li>
-						<li><a href="generic.html">Register</a></li>	
+                        {% if user.is_authenticated %}
+                        <li><a href="{% url 'logout' %}">Log Out</a></li>
+                        {% else %}
+                        <li><a href="{% url 'login' %}">Login</a></li>
+						<li><a href="{% url 'register' %}">Register</a></li>	
+                        {% endif %}
 						<li><a href="{% url 'about' %}">About</a></li>
 					</ul>
 				</nav>

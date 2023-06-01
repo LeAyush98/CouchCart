@@ -1,0 +1,43 @@
+<!DOCTYPE HTML>
+{% extends 'main/base.html' %}
+{% load static%}
+{% load socialaccount %}                
+{% block content %}
+<!-- Main -->
+	<div id="main">
+		<div class="inner">
+			<h1>Log In</h1>
+			<h3>Just a sec...</h3>
+			<div id = "scriptbois">
+				{% if messages %}
+				{% for message in messages%}
+					<strong style="color:#E8AA42"> {{message}}</strong>
+					<button onclick="closeButton()">
+						<span aria-hidden="true">&times;</span>
+					</button>
+				{%endfor%}
+				{%endif %} 
+			
+				</div>
+			<span class="image main"><img src="{% static 'images/login.jpg' %}" alt="" /></span>
+            <form method = "POST">
+                {% csrf_token %}
+                <div class="mb-2" >
+                <label for="textInputEmail1" class="form-label">Username</label>
+                <input type="text" class="form-control col-xs-3" name="username" aria-describedby="emailHelp">
+                </div>
+                <br>
+                <div class="mb-3">
+                <label for="exampleInputPassword1" class="form-label">Password</label>
+                <input type="password" class="form-control col-xs-3" name="password">
+                </div>
+                <br>
+                <button type="submit" class="btn btn-success">Log In</button>
+                
+            </form>
+            <a href="{% provider_login_url 'google' %}?next=/" class="btn btn-outline-primary">Log In with Google</a>
+		</div>
+	</div>
+
+{% endblock %}	
+				
