@@ -12,4 +12,4 @@ def genre(request, genre):
     paginator = Paginator(movies, 4)
     current_page = request.GET.get("page")
     movies = paginator.get_page(current_page)
-    return render(request, "data/generic.html", {"genre" : genre, "movies" : movies})
+    return render(request, "data/genre.html", {"genre" : genre, "movies" : movies})

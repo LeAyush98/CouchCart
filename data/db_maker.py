@@ -30,12 +30,13 @@ def add_data():
     movie_object = pandas.read_csv("data/movies.csv")
     for movie in movie_object.iterrows():
         object = MovieAPI(movie[1]["name"])
-        Movie.objects.create(name = object.search()['title'],
-                            genre = movie[1]['genre'],
-                            rating = round(object.search()['vote_average'] , 2),
-                            popularity = math.floor(float(object.search()['popularity'])),
-                            year = object.search()['release_date'].split('-')[0],
-                            synopsis = object.search()['overview'],
-                            image = f"{object.IMAGE_URL}{object.search()['poster_path']}?api_key={object.API_KEY}",
-                            price = movie[1]['price'])
+        Movie.objects.create(
+            name = object.search()['title'],
+            genre = movie[1]['genre'],
+            rating = round(object.search()['vote_average'] , 2),
+            popularity = math.floor(float(object.search()['popularity'])),
+            year = object.search()['release_date'].split('-')[0],
+            synopsis = object.search()['overview'],
+            image = f"{object.IMAGE_URL}{object.search()['poster_path']}?api_key={object.API_KEY}",
+            price = movie[1]['price'])
 

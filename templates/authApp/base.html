@@ -1,0 +1,80 @@
+{% load static %}
+<html>
+	<head>
+		<title>CouchCart</title>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+		<link rel="stylesheet" href="{% static 'assets/css/main.css' %}" />
+        <link rel="stylesheet" href="{% static 'assets/css/genre.css' %}" />
+		<link rel="stylesheet" href="{% static 'assets/css/fontawesome-all.min.css' %}" />
+		<noscript><link rel="stylesheet" href="{% static 'assets/css/noscript.css'%}" /></noscript>
+		<link rel="shortcut icon" href="{% static 'images/favicon.ico'%}" type="image/x-icon">
+		
+	</head>
+	<body class="is-preload">
+		<!-- Wrapper -->
+			<div id="wrapper">
+
+				<!-- Header -->
+					<header id="header">
+						<div class="inner">
+
+							<!-- Logo -->
+								<a href="{% url 'home'%}" class="logo">
+									<span class="symbol"><img src="{% static 'images/logo.svg' %}" alt="" /></span><span class="title">CouchCart</span>
+								</a>
+
+							<!-- Nav -->
+								<nav>
+									<ul>
+										<li><a href="#menu">Menu</a></li>
+									</ul>
+								</nav>
+
+						</div>
+					</header>
+
+				<!-- Menu -->
+				<nav id="menu">
+					<h2>Menu</h2>
+					<ul>
+						<li><a href="{% url 'home'%}">Home</a></li>
+						<li><a href="generic.html">Search</a></li>
+						<li><a href="generic.html">View Cart</a></li>
+						<li><a href="generic.html">Login</a></li>
+						<li><a href="generic.html">Register</a></li>	
+						<li><a href="{% url 'about' %}">About</a></li>
+					</ul>
+				</nav>
+                {% block content %}
+                {% endblock %}
+
+        <!-- Footer -->
+				<footer id="footer">
+					<div class="inner">
+						<section>
+							<h2>Follow</h2>
+							<ul class="icons">
+								<li><a href="https://twitter.com/AyuShar21365283" class="icon brands style2 fa-twitter"><span class="label">Twitter</span></a></li>
+                                <li><a href="https://www.linkedin.com/in/ayush-sharma-913a3025b/" class="icon brands style2 fa-linkedin"><span class="label">Linkedin</span></a></li>
+                                <li><a href="https://www.instagram.com/ayush_shar7/" class="icon brands style2 fa-instagram"><span class="label">Instagram</span></a></li>
+                                <li><a href="https://github.com/LeAyush98" class="icon brands style2 fa-github"><span class="label">Github</span></a></li>     
+							</ul>
+						</section>
+						<ul class="copyright">
+							<li>&copy; Ayush Sharma. 2023, All rights reserved</li>
+						</ul>
+					</div>
+				</footer>
+
+		</div>
+
+	<!-- Scripts -->
+		<script src="{% static 'assets/js/jquery.min.js' %}"></script>
+		<script src="{% static 'assets/js/browser.min.js' %}"></script>
+		<script src="{% static 'assets/js/breakpoints.min.js' %}"></script>
+		<script src="{% static 'assets/js/util.js' %}"></script>
+		<script src="{% static 'assets/js/main.js' %}"></script>
+
+	</body>
+</html>        

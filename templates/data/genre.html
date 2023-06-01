@@ -1,22 +1,61 @@
-
-    <div class="card" >
+<!DOCTYPE HTML>
+{% extends 'main/base.html' %}
+{% load static%}
+{% block content %}
+  <div id="main">
+    <div class="inner">
+      <h1>{{genre}}</h1>
+      <div id = "scriptbois">
+        {% if messages %}
+        {% for message in messages%}
+          <strong style="color:#E8AA42"> {{message}}</strong>
+          <button onclick="closeButton()">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        {%endfor%}
+        {%endif %} 
       
-      <div class="front" style="background-image: url({% static 'images/pic01.gif' %})">
-          <p class="large">movie ranking</p>
-      </div>
-      <div class="back">
-        <div>
-      <div class="title"><strong>movie name <span class="release_date">(movie year)</span></strong></div>
-          <div class="rating">
-              <label>movie rating</label>
-            <i class="fas fa-star star"></i>
-          </div>
-        <div class="increase">
-          <p class="overview">
-          <strong>summary.</strong>
-          </p>
         </div>
-          <a href="#" class="button">Add to Cart</a>       
-        </div>
-      </div>
+            {% if movies %}
+                {% for movie in movies %}
+                <div class="card" >
+                    <div class="front" style="background-image: url({{movie.image}})">
+                        <p class="large">{{movie.popularity}}</p>
+                    </div>
+                    <div class="back">
+                      <div>
+                    <div class="title"><strong>{{movie.name}} <span class="release_date">({{movie.year}})</span></strong></div>
+                        <div class="rating">
+                            <label>{{movie.rating}} <i class="fas fa-star star"></i></label>
+                          <span></span>
+                        </div>
+                      <div class="increase">
+                        <p class="overview">
+                        <strong>{{movie.synopsis}}</strong>
+                        </p>
+                      </div>
+                          <p>{{movie.price}} INR</p> 
+                        <a href="#" class="button-genre">Add to Cart</a>      
+                      </div>
+                    </div>
+                  </div>	
+                {% endfor %}
+                    {% if movies.has_previous %}
+                    <a href="?page=1" class="button-genre">First</a>
+                    <a href="?page={{movies.previous_page_number}}" class="button-genre">Previous</a>
+                    {% endif %}
+                
+                    {% if movies.has_next %}
+                    <a href="?page={{movies.next_page_number}}" class="button-genre">Next</a>
+                    <a href="?page={{movies.paginator.num_pages}}" class="button-genre">Last</a>
+                    {% endif %}
+                    <br>
+                    <p class="pages">Page : {{movies.number }} of {{ movies.paginator.num_pages }}</p>
+            {% else %}
+            no movie
+            {% endif %}
+                            
+                        
     </div>
+  </div>
+{% endblock %}
