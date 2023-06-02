@@ -1,5 +1,6 @@
 from django.shortcuts import render, redirect
 from django.contrib import messages
+from data.models import Movie, Cart
 import smtplib
 from dotenv import load_dotenv
 import os
@@ -29,9 +30,11 @@ def contact(request):
 # Create your views here.
 def home(request):
     contact(request)
-    return render(request, "main/index.html", {})
+    items = Cart.objects.filter(user_id = request.user.id).count()
+    return render(request, "main/index.html", {"items" : items})
 
 
 def about(request):
     contact(request)
-    return render(request, "main/about.html", {})
+    items = Cart.objects.filter(user_id = request.user.id).count()
+    return render(request, "main/about.html", {"items" : items})

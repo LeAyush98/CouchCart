@@ -20,6 +20,7 @@ class Cart(models.Model):
     name = models.CharField(max_length=30)
     price = models.FloatField()
     user = models.ForeignKey(to= User, on_delete=models.CASCADE)
+    movie = models.ForeignKey(to= Movie, on_delete=models.CASCADE)
 
     def __str__(self):
         return self.name

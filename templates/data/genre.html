@@ -1,5 +1,5 @@
 <!DOCTYPE HTML>
-{% extends 'main/base.html' %}
+{% extends 'authApp/base.html' %}
 {% load static%}
 {% block content %}
   <div id="main">
@@ -34,8 +34,12 @@
                         <strong>{{movie.synopsis}}</strong>
                         </p>
                       </div>
-                          <p>{{movie.price}} INR</p> 
-                        <a href="#" class="button-genre">Add to Cart</a>      
+                          <p>{{movie.price}} INR</p>   
+                        {% if movie.name not in my_cart %}  
+                        <a href="{% url 'add_to_cart' movie_id=movie.id user_id=user.id %}" class="button-genre">Add to Cart</a>   
+                        {% else %}
+                        <p>Already in Cart 🔥</p>  
+                        {% endif %} 
                       </div>
                     </div>
                   </div>	

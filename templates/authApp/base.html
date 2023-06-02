@@ -40,7 +40,7 @@
 					<ul>
 						<li><a href="{% url 'home'%}">Home</a></li>
 						<li><a href="{% url 'search'%}">Search</a></li>
-						<li><a href="generic.html">View Cart</a></li>
+						<li><a href="{% url 'view_cart' %}">View Cart ({{items}})</a></li>
                         {% if user.is_authenticated %}
                         <li><a href="{% url 'logout' %}">Log Out</a></li>
                         {% else %}

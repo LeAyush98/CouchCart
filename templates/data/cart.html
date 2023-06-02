@@ -1,0 +1,36 @@
+<!DOCTYPE HTML>
+{% extends 'main/base.html' %}
+{% load static%}
+
+                
+{% block content %}
+<!-- Main -->
+	<div id="main">
+		<div class="inner">
+			<h1>View Cart</h1>
+			<h3>Someone has an amazing evening ahead :)</h3>
+			<div id = "scriptbois">
+				{% if messages %}
+				{% for message in messages%}
+					<strong style="color:#E8AA42"> {{message}}</strong>
+					<button onclick="closeButton()">
+						<span aria-hidden="true">&times;</span>
+					</button>
+				{%endfor%}
+				{%endif %} 
+			
+				</div>
+			<span class="image main"><img src="{% static 'images/cart.jpg' %}" alt="" /></span>
+            {% if items %}
+            {% for item in items %}
+                <p>{{item.name}} - {{item.price}} INR </p>
+            {% endfor %}
+            {% else %}
+                <p>Your cart is empty, {{user.username}}</p>
+            {% endif %}
+			<a href="#" class="button-genre">Checkout</a>  
+		</div>
+	</div>
+
+{% endblock %}	
+				
