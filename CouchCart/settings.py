@@ -47,6 +47,7 @@ INSTALLED_APPS = [
     "main",
     "authApp",
     "data",
+    "rest_framework",
 
     "django.contrib.sites",
     "allauth",

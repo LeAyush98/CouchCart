@@ -39,7 +39,7 @@
 					<h2>Menu</h2>
 					<ul>
 						<li><a href="{% url 'home'%}">Home</a></li>
-						<li><a href="generic.html">Search</a></li>
+						<li><a href="{% url 'search'%}">Search</a></li>
 						<li><a href="generic.html">View Cart</a></li>
                         {% if user.is_authenticated %}
                         <li><a href="{% url 'logout' %}">Log Out</a></li>

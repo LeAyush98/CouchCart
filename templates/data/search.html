@@ -1,0 +1,36 @@
+{% extends 'authApp/base.html' %}
+{% load static %}
+
+{% block content %}
+<!-- Main -->
+<div id="main">
+    <div class="inner">
+        <h1>Search</h1>
+        <h3>Almost there :)</h3>
+        <div id = "scriptbois">
+            {% if messages %}
+            {% for message in messages%}
+                <strong style="color:#E8AA42"> {{message}}</strong>
+                <button onclick="closeButton()">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            {%endfor%}
+            {%endif %} 
+        
+            </div>
+        <span class="image main"><img src="{% static 'images/search.jpg' %}" alt="" /></span>
+        <form method = "POST">
+            {% csrf_token %}
+            <div class="mb-2" >
+            <label for="MovieName" class="form-label">Enter Movie Name</label>
+            <input type="text" class="form-control col-xs-3" name="movie" aria-describedby="MovieHelp">
+            </div>
+            <br>
+            <button type="submit" class="btn btn-success">Search</button>
+            
+        </form>
+    </div>
+</div>
+
+{% endblock %}	
+            
