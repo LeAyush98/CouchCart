@@ -41,8 +41,9 @@ def search(request):
 
 @login_required
 def view_cart(request):
-    items = Cart.objects.filter(user_id = request.user.id)
-    return render(request, "data/cart.html", {"items" : items})
+    items = Cart.objects.filter(user_id = request.user.id).count()
+    items_in_cart = Cart.objects.filter(user_id = request.user.id)
+    return render(request, "data/cart.html", {"items" : items, "items_in_cart" : items_in_cart})
 
 @login_required
 def add_to_cart(request, movie_id, user_id):

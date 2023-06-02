@@ -21,8 +21,8 @@
 			
 				</div>
 			<span class="image main"><img src="{% static 'images/cart.jpg' %}" alt="" /></span>
-            {% if items %}
-            {% for item in items %}
+            {% if items_in_cart %}
+            {% for item in items_in_cart %}
                 <p>{{item.name}} - {{item.price}} INR </p>
             {% endfor %}
             {% else %}
