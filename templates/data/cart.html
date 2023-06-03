@@ -25,10 +25,15 @@
             {% for item in items_in_cart %}
                 <p>{{item.name}} - {{item.price}} INR </p>
             {% endfor %}
+            <hr>
+            <p>Total: {{total_price}} INR
+            <br>
+            <br>
+            <a href="#" class="button-genre">Checkout</a> 
             {% else %}
                 <p>Your cart is empty, {{user.username}}</p>
             {% endif %}
-			<a href="#" class="button-genre">Checkout</a>  
+			 
 		</div>
 	</div>
 

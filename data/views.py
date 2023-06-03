@@ -10,6 +10,7 @@ from rest_framework.permissions import AllowAny, IsAuthenticated
 from rest_framework.response import Response
 from django.contrib.auth.models import User
 from django.core.handlers.wsgi import WSGIRequest
+from django.db.models import Sum
 
 def make_cart_list(request: WSGIRequest) -> list:
     my_cart_list = []
@@ -43,7 +44,8 @@ def search(request):
 def view_cart(request):
     items = Cart.objects.filter(user_id = request.user.id).count()
     items_in_cart = Cart.objects.filter(user_id = request.user.id)
-    return render(request, "data/cart.html", {"items" : items, "items_in_cart" : items_in_cart})
+    total_price = Cart.objects.filter(user_id = request.user.id).aggregate(Sum('price'))
+    return render(request, "data/cart.html", {"items" : items, "items_in_cart" : items_in_cart, "total_price" : total_price['price__sum']})
 
 @login_required
 def add_to_cart(request, movie_id, user_id):
