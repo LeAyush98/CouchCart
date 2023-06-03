@@ -12,6 +12,7 @@ from rest_framework.response import Response
 from django.contrib.auth.models import User
 from django.core.handlers.wsgi import WSGIRequest
 from django.db.models import Sum
+from django.core.exceptions import ObjectDoesNotExist
 from django.views.decorators.csrf import csrf_exempt   
 import razorpay
 from dotenv import load_dotenv
@@ -103,3 +104,17 @@ def success(request):
         items_in_cart.delete() # As payment is success
     items = Cart.objects.filter(user_id = request.user.id).count() 
     return render(request, "data/success.html", {"items" : items})
+
+@login_required
+def delete_item(request, id):
+    try:
+        item_to_delete = Cart.objects.get(id=id)
+        if request.user.id == item_to_delete.user_id:
+            item_to_delete.delete()
+            return redirect("view_cart")
+        else:
+            messages.error(request, "You are not authorised to do that.")
+            return redirect("home")
+    except ObjectDoesNotExist:
+        return redirect("view_cart")
+    
