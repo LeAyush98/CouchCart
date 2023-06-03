@@ -29,7 +29,23 @@
             <p>Total: {{total_price}} INR
             <br>
             <br>
-            <a href="#" class="button-genre">Checkout</a> 
+            <form action="{% url 'success' %}" method="POST">
+                <script
+                    src="https://checkout.razorpay.com/v1/checkout.js"
+                    data-key="{{KEY_ID}}" 
+                    data-amount="{{amount}}" 
+                    data-currency="INR"
+                    data-order_id="{{payment.id}}"
+                    data-buttontext="Pay with Razorpay"
+                    data-name="CouchCart"
+                    data-description="One stop for all your beloved movies."
+                    data-image="{% static 'images/favicon.jpg' %}"
+                    data-prefill.name="{{user.first_name}}"
+                    data-prefill.email="{{user.email}}"
+                    data-theme.color="#E8AA42"
+                ></script>
+                <input type="hidden" custom="Hidden Element" name="hidden"/>
+                </form>
             {% else %}
                 <p>Your cart is empty, {{user.username}}</p>
             {% endif %}

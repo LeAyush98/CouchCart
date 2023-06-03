@@ -7,10 +7,17 @@ from django.contrib.auth.decorators import login_required
 from .serialisers import MovieSerializer
 from rest_framework.decorators import api_view, permission_classes
 from rest_framework.permissions import AllowAny, IsAuthenticated
+from django.http import Http404
 from rest_framework.response import Response
 from django.contrib.auth.models import User
 from django.core.handlers.wsgi import WSGIRequest
 from django.db.models import Sum
+from django.views.decorators.csrf import csrf_exempt   
+import razorpay
+from dotenv import load_dotenv
+import os
+
+load_dotenv(".env")
 
 def make_cart_list(request: WSGIRequest) -> list:
     my_cart_list = []
@@ -18,6 +25,12 @@ def make_cart_list(request: WSGIRequest) -> list:
     for item in my_cart:
         my_cart_list.append(item.name)
     return my_cart_list    
+
+def get_referer(request):
+    referer = request.META.get('HTTP_REFERER')
+    if not referer:
+        return None
+    return referer
 
 # Create your views here.
 def genre(request, genre):
@@ -45,7 +58,17 @@ def view_cart(request):
     items = Cart.objects.filter(user_id = request.user.id).count()
     items_in_cart = Cart.objects.filter(user_id = request.user.id)
     total_price = Cart.objects.filter(user_id = request.user.id).aggregate(Sum('price'))
-    return render(request, "data/cart.html", {"items" : items, "items_in_cart" : items_in_cart, "total_price" : total_price['price__sum']})
+    try:
+        amount = (int(total_price["price__sum"])*100)
+    except TypeError:
+        amount = 0
+    KEY_ID = os.getenv("KEY_ID")
+    KEY_SECRET = os.getenv("KEY_SECRET")
+    if request.method == "POST":
+        client = razorpay.Client(auth=(KEY_ID, KEY_SECRET))
+        payment = client.order.create({'amount': amount, 'currency': 'INR', 'payment_capture': '1'})
+
+    return render(request, "data/cart.html", {"items" : items, "items_in_cart" : items_in_cart, "total_price" : total_price['price__sum'], "KEY_ID" : KEY_ID, "amount" : amount})
 
 @login_required
 def add_to_cart(request, movie_id, user_id):
@@ -61,7 +84,6 @@ def add_to_cart(request, movie_id, user_id):
                 movie = movie
             )
         items = Cart.objects.filter(user_id = request.user.id).count()
-        
         movies = Movie.objects.filter(genre = movie.genre).order_by("id")
         paginator = Paginator(movies, 4)
         current_page = request.GET.get("page")
@@ -70,3 +92,14 @@ def add_to_cart(request, movie_id, user_id):
     else:
         messages.error(request, "You are not authorised to do that.")
         return redirect("home")
+
+@csrf_exempt
+@login_required
+def success(request):
+    items_in_cart = Cart.objects.filter(user_id = request.user.id)
+    if not get_referer(request):
+        raise Http404
+    else:
+        items_in_cart.delete() # As payment is success
+    items = Cart.objects.filter(user_id = request.user.id).count() 
+    return render(request, "data/success.html", {"items" : items})

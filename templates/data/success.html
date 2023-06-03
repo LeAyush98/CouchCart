@@ -1,0 +1,30 @@
+<!DOCTYPE HTML>
+{% extends 'authApp/base.html' %}
+{% load static%}
+
+                
+{% block content %}
+<!-- Main -->
+	<div id="main">
+		<div class="inner">
+			<h1>Congratulations, {{user.first_name}}!</h1>
+			<h3>Your purchase has been successful ✅</h3>
+			<div id = "scriptbois">
+				{% if messages %}
+				{% for message in messages%}
+					<strong style="color:#E8AA42"> {{message}}</strong>
+					<button onclick="closeButton()">
+						<span aria-hidden="true">&times;</span>
+					</button>
+				{%endfor%}
+				{%endif %} 
+			
+				</div>
+			<span class="image main"><img src="{% static 'images/success.png' %}" alt="" /></span>
+            <p>Your requested movies will be with you shortly...</p>
+			 
+		</div>
+	</div>
+
+{% endblock %}	
+				
