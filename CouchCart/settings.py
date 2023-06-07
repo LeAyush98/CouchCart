@@ -11,29 +11,32 @@ https://docs.djangoproject.com/en/4.2/ref/settings/
 """
 
 from pathlib import Path
-from dotenv import load_dotenv
+import boto3
 import os
 
-load_dotenv(".env")
+AWS_REGION = "ap-south-1"
+ssm_client = boto3.client("ssm", region_name=AWS_REGION)
+
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 TEMPLATES_DIR = os.path.join(BASE_DIR, "templates")
 STATICFILES_DIRS = [os.path.join(BASE_DIR, "static"),]
+STATIC_DIR = os.path.join(BASE_DIR,"static")
 
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/4.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = os.getenv("SECRET_KEY")
+SECRET_KEY = ssm_client.get_parameter(Name='couchcart_secret_key', WithDecryption=True)['Parameter']['Value']
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ["127.0.0.1", "localhost"]
+ALLOWED_HOSTS = ["ec2-13-126-26-5.ap-south-1.compute.amazonaws.com"]
 
-SITE_ID = 2
+SITE_ID = 4
 
 # Application definition
 
@@ -106,9 +109,9 @@ DATABASES = {
 
         'USER': 'Ayush Sharma',
 
-        'PASSWORD': os.getenv("DB_PASSWORD"),
+        'PASSWORD': ssm_client.get_parameter(Name='healthilyfe_db_password', WithDecryption=True)['Parameter']['Value'],
 
-        'HOST': 'localhost',
+        'HOST': 'couchcart-instance-1.cyyhrypz7vid.ap-south-1.rds.amazonaws.com',
 
         'PORT': '5432',
 
@@ -151,6 +154,11 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/4.2/howto/static-files/
 
 STATIC_URL = "static/"
+
+if DEBUG:
+    STATICFILES_DIRS = [STATIC_DIR,]
+else:
+    STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field

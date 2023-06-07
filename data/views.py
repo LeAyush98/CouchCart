@@ -15,10 +15,12 @@ from django.db.models import Sum
 from django.core.exceptions import ObjectDoesNotExist
 from django.views.decorators.csrf import csrf_exempt   
 import razorpay
-from dotenv import load_dotenv
+import boto3
 import os
 
-load_dotenv(".env")
+AWS_REGION = "ap-south-1"
+ssm_client = boto3.client("ssm", region_name=AWS_REGION)
+
 
 def make_cart_list(request: WSGIRequest) -> list:
     my_cart_list = []
@@ -27,6 +29,7 @@ def make_cart_list(request: WSGIRequest) -> list:
         my_cart_list.append(item.name)
     return my_cart_list    
 
+# To check if the url is typed directly instead of being redirected after payment
 def get_referer(request):
     referer = request.META.get('HTTP_REFERER')
     if not referer:
@@ -63,8 +66,8 @@ def view_cart(request):
         amount = (int(total_price["price__sum"])*100)
     except TypeError:
         amount = 0
-    KEY_ID = os.getenv("KEY_ID")
-    KEY_SECRET = os.getenv("KEY_SECRET")
+    KEY_ID = ssm_client.get_parameter(Name='razorpay_key_id', WithDecryption=True)['Parameter']['Value']
+    KEY_SECRET = ssm_client.get_parameter(Name='razorpay_key_secret', WithDecryption=True)['Parameter']['Value']
     if request.method == "POST":
         client = razorpay.Client(auth=(KEY_ID, KEY_SECRET))
         payment = client.order.create({'amount': amount, 'currency': 'INR', 'payment_capture': '1'})
