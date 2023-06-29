@@ -4,7 +4,12 @@ from data.models import Movie, Cart
 import smtplib
 import boto3
 import os
-from data.db_maker import add_data
+from dotenv import load_dotenv
+from social_django.models import UserSocialAuth
+from authApp.views import update_cart
+
+load_dotenv(".env")
+
 
 AWS_REGION = "ap-south-1"
 ssm_client = boto3.client("ssm", region_name=AWS_REGION)
@@ -12,8 +17,8 @@ ssm_client = boto3.client("ssm", region_name=AWS_REGION)
 create_db = True
 
 def mail(name:str, email:str, message:str) -> None:
-    EMAIL = ssm_client.get_parameter(Name='contact_email', WithDecryption=True)['Parameter']['Value']
-    PASSWORD = ssm_client.get_parameter(Name='contact_password', WithDecryption=True)['Parameter']['Value']
+    EMAIL = os.getenv("EMAIL")
+    PASSWORD = os.getenv("PASSWORD")
 
     connection = smtplib.SMTP("smtp.gmail.com", 587)
     connection.starttls()
@@ -34,15 +39,22 @@ def contact(request):
 # Create your views here.
 def home(request):
     contact(request)
-    items = Cart.objects.filter(user_id = request.user.id).count()
+    if request.user.is_authenticated:
+        update_cart(request)
+        items = Cart.objects.filter(user_id = request.user.id).count() 
+    elif "items" in request.session:
+        items = request.session["items"]
+    else:
+        items = 0    
     return render(request, "main/index.html", {"items" : items})
 
 
 def about(request):
-    global create_db
-    if create_db:
-        add_data()
-        create_db = False
     contact(request)
-    items = Cart.objects.filter(user_id = request.user.id).count()
+    if request.user.is_authenticated:
+        items = Cart.objects.filter(user_id = request.user.id).count() 
+    elif "items" in request.session:
+        items = request.session["items"]
+    else:
+        items = 0   
     return render(request, "main/about.html", {"items" : items})

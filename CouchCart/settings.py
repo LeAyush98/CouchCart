@@ -13,6 +13,9 @@ https://docs.djangoproject.com/en/4.2/ref/settings/
 from pathlib import Path
 import boto3
 import os
+from dotenv import load_dotenv
+
+load_dotenv(".env")
 
 AWS_REGION = "ap-south-1"
 ssm_client = boto3.client("ssm", region_name=AWS_REGION)
@@ -29,14 +32,14 @@ STATIC_DIR = os.path.join(BASE_DIR,"static")
 # See https://docs.djangoproject.com/en/4.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = ssm_client.get_parameter(Name='couchcart_secret_key', WithDecryption=True)['Parameter']['Value']
+SECRET_KEY = os.getenv("SECRET_KEY")
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ["ec2-13-126-26-5.ap-south-1.compute.amazonaws.com"]
+ALLOWED_HOSTS = ["ec2-13-126-26-5.ap-south-1.compute.amazonaws.com", "127.0.0.1"]
 
-SITE_ID = 4
+SITE_ID = 2
 
 # Application definition
 
@@ -51,6 +54,7 @@ INSTALLED_APPS = [
     "authApp",
     "data",
     "rest_framework",
+    "social_django",
 
     "django.contrib.sites",
     "allauth",
@@ -109,9 +113,9 @@ DATABASES = {
 
         'USER': 'Ayush Sharma',
 
-        'PASSWORD': ssm_client.get_parameter(Name='healthilyfe_db_password', WithDecryption=True)['Parameter']['Value'],
+        'PASSWORD': os.getenv("DB_PASSWORD"),
 
-        'HOST': 'couchcart-instance-1.cyyhrypz7vid.ap-south-1.rds.amazonaws.com',
+        'HOST': 'localhost',
 
         'PORT': '5432',
 

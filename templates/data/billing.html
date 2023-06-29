@@ -1,5 +1,5 @@
 <!DOCTYPE HTML>
-{% extends 'main/base.html' %}
+{% extends 'authApp/base.html' %}
 {% load static%}
 
                 
@@ -7,8 +7,8 @@
 <!-- Main -->
 	<div id="main">
 		<div class="inner">
-			<h1>View Cart</h1>
-			<h3>Someone has an amazing evening ahead :)</h3>
+			<h1>Billing Address</h1>
+			<h3>Few more details please...</h3>
 			<div id = "scriptbois">
 				{% if messages %}
 				{% for message in messages%}
@@ -20,17 +20,10 @@
 				{%endif %} 
 			
 				</div>
-			<span class="image main"><img src="{% static 'images/cart.jpg' %}" alt="" /></span>
-            {% if items_in_cart %}
-            {% for item in items_in_cart %}
-                <p>{{item.name}} - {{item.price}} INR <a href="{% url 'delete_item' id=item.id %}">🗑️</a></p>
-            {% endfor %}
-            <hr>
-            <p>Total: {{total_price}} INR
-            <br>
-            <br>
-            <button><a href="{% url 'billing' %}">Next Step</a></button>
-            <!-- <form action="{% url 'success' %}" method="POST">
+			<span class="image main"><img src="{% static 'images/billing.png' %}" alt="" /></span>
+            <form action="{% url 'success' %}" method="post">
+                {% csrf_token %}
+                {{ form.as_p }}
                 <script
                     src="https://checkout.razorpay.com/v1/checkout.js"
                     data-key="{{KEY_ID}}" 
@@ -46,15 +39,7 @@
                     data-theme.color="#E8AA42"
                 ></script>
                 <input type="hidden" custom="Hidden Element" name="hidden"/>
-                </form> -->
-            {% else %}
-            {% if request.user.is_authenticated %}
-                <p>Your cart is empty, {{user.username}}</p>
-            {% else %}
-                <p>Your cart is empty, Guest User</p>   
-            {% endif %}     
-            {% endif %}
-			 
+            </form>
 		</div>
 	</div>
 
